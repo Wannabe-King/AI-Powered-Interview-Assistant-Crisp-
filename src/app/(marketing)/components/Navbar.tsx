@@ -11,7 +11,7 @@ import { Dashboard } from "./Dashboard";
 
 export const Navbar = () => {
   return (
-    <Tabs defaultValue="home" className="w-[400px] text-black">
+    <Tabs defaultValue="home" className="flex flex-col items-center text-black">
       <TabsList className="">
         <TabsTrigger value="home">
           <Home />
