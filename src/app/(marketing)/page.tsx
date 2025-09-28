@@ -1,13 +1,12 @@
 // import { gemini_call } from "@/server/gemini";
-// import { Camera } from "lucide-react";
 
-import { Navbar } from "@/components/Navbar";
+import { Header } from "@/app/(marketing)/components/Header";
 
 export default async function Home() {
   // await gemini_call()
   return (
-    <div className="">
-      <Navbar />
+    <div className="max-w-5x mx-auto">
+      <Header />
     </div>
   );
 }
