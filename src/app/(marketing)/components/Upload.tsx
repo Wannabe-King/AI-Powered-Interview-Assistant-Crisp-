@@ -9,18 +9,64 @@ import {
 } from "@/components/ui/card";
 import { useState } from "react";
 
+import * as mammoth from "mammoth";
+import { extractFromDocFile } from "@/lib/parseResume";
+
+// import * as pdfjsLib from "pdfjs-dist";
+
+// pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+// async function extractTextFromDocx(filePath: string): Promise<string> {
+//   try {
+//     // Read the .docx file as a buffer
+//     // const fileBuffer = fs.readFileSync(filePath);
+
+//     // Use Mammoth to extract text
+//     const result = await mammoth.extractRawText({ buffer: fileBuffer });
+
+//     // Return the extracted text
+//     return result.value; // The extracted text
+//   } catch (error) {
+//     console.error("Error extracting text from .docx:", error);
+//     throw error;
+//   }
+// }
+
 export const Upload = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       setUploadedFile(file);
-      console.log("Resume uploaded:", file.name);
+      let fullText = "";
+      if (file.type == "application/pdf") {
+        // const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        // for (let i = 1; i <= pdf.numPages; i++) {
+        //   const page = await pdf.getPage(i);
+        //   const textContent = await page.getTextContent();
+        //   const pageText = textContent.items
+        //     .map((item: any) => item.str)
+        //     .join(" ");
+        //   fullText += pageText + "\n";
+        // }
+      } else if (
+        file.type ==
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
+        const arrayBuffer = await file.arrayBuffer();
+        const result = await mammoth.extractRawText({ arrayBuffer });
+        fullText = result.value;
+      } else if (file.type == "application/msword") {
+        fullText = await extractFromDocFile(file);
+      }
+      console.log("array buffer: ", fullText);
+      console.log("Resume uploaded:", file.type);
     }
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files?.[0];
     if (
@@ -30,7 +76,10 @@ export const Upload = () => {
         file.name.endsWith(".docx"))
     ) {
       setUploadedFile(file);
-      console.log("Resume dropped:", file.name);
+      // const buffer = Buffer.from(await file.arrayBuffer());
+      // const data = await pdfParse(buffer);
+      // console.log("Buffer: ", data);
+      console.log("Resume dropped:", file.type);
     }
   };
 
