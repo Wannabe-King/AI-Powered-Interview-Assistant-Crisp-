@@ -10,26 +10,7 @@ import {
 import { useState } from "react";
 
 import * as mammoth from "mammoth";
-import { extractFromDocFile } from "@/lib/parseResume";
-
-// import * as pdfjsLib from "pdfjs-dist";
-
-// pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
-// async function extractTextFromDocx(filePath: string): Promise<string> {
-//   try {
-//     // Read the .docx file as a buffer
-//     // const fileBuffer = fs.readFileSync(filePath);
-
-//     // Use Mammoth to extract text
-//     const result = await mammoth.extractRawText({ buffer: fileBuffer });
-
-//     // Return the extracted text
-//     return result.value; // The extracted text
-//   } catch (error) {
-//     console.error("Error extracting text from .docx:", error);
-//     throw error;
-//   }
-// }
+import { extractFromDocFile, extractTextFromPDF } from "@/lib/parseResume";
 
 export const Upload = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -42,15 +23,7 @@ export const Upload = () => {
       setUploadedFile(file);
       let fullText = "";
       if (file.type == "application/pdf") {
-        // const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-        // for (let i = 1; i <= pdf.numPages; i++) {
-        //   const page = await pdf.getPage(i);
-        //   const textContent = await page.getTextContent();
-        //   const pageText = textContent.items
-        //     .map((item: any) => item.str)
-        //     .join(" ");
-        //   fullText += pageText + "\n";
-        // }
+        fullText = await extractTextFromPDF(file);
       } else if (
         file.type ==
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
