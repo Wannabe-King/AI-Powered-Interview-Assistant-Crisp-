@@ -1,10 +1,3 @@
-
-
-
-import * as pdfjsLib from "pdfjs-dist";
-
-pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.mjs`;
-
 export const extractFromDocFile = async (file: File): Promise<string> => {
   const formData = new FormData();
   formData.append("file", file);
@@ -29,6 +22,12 @@ export const extractFromDocFile = async (file: File): Promise<string> => {
 
 export const extractTextFromPDF = async (file: File): Promise<string> => {
   try {
+    // Dynamic import to avoid SSR issues
+    const pdfjsLib = await import("pdfjs-dist");
+
+    // Set worker path
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
+
     const arrayBuffer = await file.arrayBuffer();
 
     // Use pdf.js to get the text
