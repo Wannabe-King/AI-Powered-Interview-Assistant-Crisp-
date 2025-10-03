@@ -12,7 +12,11 @@ import { useState } from "react";
 import * as mammoth from "mammoth";
 import { extractFromDocFile, extractTextFromPDF } from "@/lib/parseResume";
 
-export const Upload = () => {
+interface UploadProps {
+  onResumeProcessed?: (text: string) => void;
+}
+
+export const Upload = ({ onResumeProcessed }: UploadProps) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
   const handleFileUpload = async (
@@ -36,6 +40,11 @@ export const Upload = () => {
       }
       console.log("array buffer: ", fullText);
       console.log("Resume uploaded:", file.type);
+
+      // Call the callback if text was extracted
+      if (fullText.trim() && onResumeProcessed) {
+        onResumeProcessed(fullText);
+      }
     }
   };
 
