@@ -69,5 +69,7 @@ export async function generateQuestions() {
     });
 
     console.log(response);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 }
