@@ -6,7 +6,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-function parseGeminiResponse(responseText: string): any {
+function parseGeminiResponse(responseText: string): UserData {
   try {
     // Remove markdown code blocks and any extra whitespace
     let cleanText = responseText.trim();
@@ -23,7 +23,7 @@ function parseGeminiResponse(responseText: string): any {
     cleanText = cleanText.trim();
 
     // Parse the cleaned JSON
-    return JSON.parse(cleanText);
+    return JSON.parse(cleanText) as UserData;
   } catch (error) {
     console.error("Failed to parse JSON:", error);
     console.error("Original text:", responseText);
@@ -31,7 +31,7 @@ function parseGeminiResponse(responseText: string): any {
   }
 }
 
-export async function gemini_call(pdf_text: string) {
+export async function gemini_call(pdf_text: string): Promise<UserData|undefined|null> {
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-lite",
@@ -51,7 +51,7 @@ export async function gemini_call(pdf_text: string) {
     });
     console.log(response.text);
     if (response.text) {
-      const userData = parseGeminiResponse(response.text) as UserData;
+      const userData = parseGeminiResponse(response.text);
       console.log("Extracted user data:", userData);
       return userData;
     }
