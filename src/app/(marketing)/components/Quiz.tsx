@@ -252,7 +252,7 @@ export const Quiz = ({
               </h2>
 
               <p className="text-2xl text-gray-700 mb-6 font-medium">
-                You've successfully completed the quiz!
+                You&apos;ve successfully completed the quiz!
               </p>
             </div>
           </CardContent>

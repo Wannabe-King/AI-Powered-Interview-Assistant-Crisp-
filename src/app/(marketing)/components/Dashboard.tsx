@@ -71,10 +71,6 @@ export const Dashboard = () => {
   return (
     <TabsContent value="interviewer">
       <div className="max-w-7xl mx-auto p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">
-          Interview Dashboard
-        </h1>
-
         {/* Statistics Cards */}
         {stats && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -85,7 +81,7 @@ export const Dashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold text-blue-600">
+                <p className="text-3xl font-bold">
                   {stats.totalSessions}
                 </p>
               </CardContent>
@@ -98,7 +94,7 @@ export const Dashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold text-green-600">
+                <p className="text-3xl font-bold">
                   {stats.totalUsers}
                 </p>
               </CardContent>
@@ -111,7 +107,7 @@ export const Dashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold text-purple-600">
+                <p className="text-3xl font-bold text-blue-300">
                   {stats.averageTimeSpent
                     ? formatTime(Math.round(stats.averageTimeSpent))
                     : "N/A"}
