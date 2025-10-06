@@ -8,6 +8,7 @@ export interface UserData {
 export interface Question {
   id: number;
   question: string;
+  time: number;
   maxMarks: number;
 }
 
@@ -17,7 +18,7 @@ export interface QuizData {
 }
 
 export interface Answer {
-  questionId: number;
+  question: Question;
   answer: string;
   timeSpent: number;
 }

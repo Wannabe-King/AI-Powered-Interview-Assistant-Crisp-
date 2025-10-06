@@ -11,22 +11,16 @@ import { Dashboard } from "./Dashboard";
 
 export const Navbar = () => {
   return (
-    <Tabs defaultValue="home" className="flex flex-col items-center text-black">
+    <Tabs defaultValue="quiz" className="flex flex-col items-center text-black">
       <TabsList className="">
-        <TabsTrigger value="home">
-          <Home />
-          About
-        </TabsTrigger>
-        <TabsTrigger value="interviewee">
-          <MessageCircle /> Interviewee Tab
+        <TabsTrigger value="quiz">
+          <MessageCircle /> Quiz Tab
         </TabsTrigger>
         <TabsTrigger value="interviewer">
           <CircleGauge />
-          Interviewer Dashboard
+          Performance Dashboard
         </TabsTrigger>
       </TabsList>
-
-      <About />
       <Interviewee />
       <Dashboard />
     </Tabs>

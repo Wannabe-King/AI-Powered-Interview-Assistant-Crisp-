@@ -26,7 +26,7 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     const pdfjsLib = await import("pdfjs-dist");
 
     // Set worker path
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.mjs`;
 
     const arrayBuffer = await file.arrayBuffer();
 
