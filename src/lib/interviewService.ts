@@ -1,4 +1,9 @@
-import { UserData, Question } from "@/lib/types";
+import {
+  UserData,
+  Question,
+  InterviewSession,
+  InterviewStats,
+} from "@/lib/types";
 
 // Interface for interview session data
 export interface InterviewSessionData {
@@ -73,7 +78,9 @@ export async function updateInterviewAnswers(
 }
 
 // Get interview session by ID
-export async function getInterviewSession(sessionId: string) {
+export async function getInterviewSession(
+  sessionId: string
+): Promise<InterviewSession | null> {
   try {
     const response = await fetch(
       `/api/interviews?action=get&sessionId=${sessionId}`
@@ -92,7 +99,9 @@ export async function getInterviewSession(sessionId: string) {
 }
 
 // Get user's interview sessions
-export async function getUserInterviewSessions(email: string) {
+export async function getUserInterviewSessions(
+  email: string
+): Promise<InterviewSession[]> {
   try {
     const response = await fetch(
       `/api/interviews?action=getUserSessions&email=${encodeURIComponent(
@@ -113,7 +122,7 @@ export async function getUserInterviewSessions(email: string) {
 }
 
 // Get interview statistics
-export async function getInterviewStats() {
+export async function getInterviewStats(): Promise<InterviewStats> {
   try {
     const response = await fetch("/api/interviews?action=stats");
     const result = await response.json();
@@ -122,7 +131,7 @@ export async function getInterviewStats() {
       throw new Error(result.error || "Failed to get interview stats");
     }
 
-    return result.stats;
+    return result.stats as InterviewStats;
   } catch (error) {
     console.error("Error getting interview stats:", error);
     throw error;
@@ -130,7 +139,9 @@ export async function getInterviewStats() {
 }
 
 // Search interview sessions
-export async function searchInterviewSessions(searchTerm: string) {
+export async function searchInterviewSessions(
+  searchTerm: string
+): Promise<InterviewSession[]> {
   try {
     const response = await fetch("/api/interviews", {
       method: "POST",

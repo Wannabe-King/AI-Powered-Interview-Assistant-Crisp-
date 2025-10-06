@@ -5,23 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TabsContent } from "@/components/ui/tabs";
+import { InterviewStats, InterviewSession } from "@/lib/types";
 import {
   getInterviewStats,
   searchInterviewSessions,
 } from "@/lib/interviewService";
 
-interface InterviewSession {
-  id: string;
-  user_name: string;
-  user_email: string;
-  user_mobile: string;
-  time_spent: number;
-  completed_at: string;
-  created_at: string;
-}
-
 export const Dashboard = () => {
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<InterviewStats | null>(null);
   const [sessions, setSessions] = useState<InterviewSession[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -81,9 +72,7 @@ export const Dashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold">
-                  {stats.totalSessions}
-                </p>
+                <p className="text-3xl font-bold">{stats.totalSessions}</p>
               </CardContent>
             </Card>
 
@@ -94,9 +83,7 @@ export const Dashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold">
-                  {stats.totalUsers}
-                </p>
+                <p className="text-3xl font-bold">{stats.totalUsers}</p>
               </CardContent>
             </Card>
 

@@ -22,3 +22,23 @@ export interface Answer {
   answer: string;
   timeSpent: number;
 }
+
+export interface InterviewSession {
+  id: string;
+  user_name: string;
+  user_email: string;
+  user_mobile: string;
+  resume_text: string;
+  questions: Question[];
+  answers: Record<number, string>;
+  time_spent: number;
+  completed_at: string;
+  created_at: string;
+}
+
+export interface InterviewStats {
+  totalSessions: number;
+  totalUsers: number;
+  averageTimeSpent: number;
+  recentSessions: InterviewSession[];
+}

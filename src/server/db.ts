@@ -1,21 +1,12 @@
 import { neon } from "@neondatabase/serverless";
-import { UserData, Question } from "@/lib/types";
+import {
+  UserData,
+  Question,
+  InterviewSession,
+  InterviewStats,
+} from "@/lib/types";
 
 const sql = neon(process.env.DATABASE_URL as string);
-
-// Interface for database records
-interface InterviewSession {
-  id: string;
-  user_name: string;
-  user_email: string;
-  user_mobile: string;
-  resume_text: string;
-  questions: Question[];
-  answers: Record<number, string>;
-  time_spent: number;
-  completed_at: string;
-  created_at: string;
-}
 
 // Initialize database tables
 export async function initializeTables() {
@@ -137,12 +128,7 @@ export async function getUserInterviewSessions(
 }
 
 // Get interview statistics
-export async function getInterviewStats(): Promise<{
-  totalSessions: number;
-  totalUsers: number;
-  averageTimeSpent: number;
-  recentSessions: InterviewSession[];
-}> {
+export async function getInterviewStats(): Promise<InterviewStats> {
   try {
     const [
       totalSessionsResult,
